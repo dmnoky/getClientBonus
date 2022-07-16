@@ -1,0 +1,165 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://mkb.ru/GetClientMkbBonusInfo/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://mkb.ru/GetClientMkbBonusInfo/">
+   <wsp:Policy xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" wsu:Id="UTOverTransport">
+      <wsp:ExactlyOne>
+         <wsp:All>
+            <sp:TransportBinding xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+               <wsp:Policy>
+                  <sp:TransportToken>
+                     <wsp:Policy>
+                        <sp:HttpsToken RequireClientCertificate="false"/>
+                     </wsp:Policy>
+                  </sp:TransportToken>
+                  <sp:AlgorithmSuite>
+                     <wsp:Policy>
+                        <sp:Basic256/>
+                     </wsp:Policy>
+                  </sp:AlgorithmSuite>
+                  <sp:Layout>
+                     <wsp:Policy>
+                        <sp:Lax/>
+                     </wsp:Policy>
+                  </sp:Layout>
+                  <sp:IncludeTimestamp/>
+               </wsp:Policy>
+            </sp:TransportBinding>
+            <sp:SignedSupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+               <wsp:Policy>
+                  <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient"/>
+               </wsp:Policy>
+            </sp:SignedSupportingTokens>
+         </wsp:All>
+      </wsp:ExactlyOne>
+   </wsp:Policy>
+   <wsdl:types>
+      <xsd:schema attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://mkb.ru/GetClientMkbBonusInfo/">
+         <xsd:element name="GetClientMkbBonusInfo">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element minOccurs="0" name="GetClientMkbBonusInfoRq" type="tns:GetClientMkbBonusInfoRqTypeRq"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:element name="GetClientMkbBonusInfoResponse">
+            <xsd:complexType>
+               <xsd:sequence>
+                  <xsd:element minOccurs="0" name="GetClientMkbBonusInfoRs" type="tns:GetClientMkbBonusInfoRsTypeRs"/>
+                  <xsd:element minOccurs="0" name="ErrorCode" type="xsd:string"/>
+                  <xsd:element minOccurs="0" name="ErrorMsg" type="xsd:string"/>
+               </xsd:sequence>
+            </xsd:complexType>
+         </xsd:element>
+         <xsd:complexType name="GetClientMkbBonusInfoRsTypeRs">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="ClientList" type="tns:ClientListTypeRs"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ClientTypeRq">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="ClientCode" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ClientListTypeRs">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="Client" type="tns:ClientTypeRs"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ClientTypeRs">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="ClientCode" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="MKBBonusInfo" type="tns:MKBBonusInfoTypeRs"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="MKBBonusInfoTypeRs">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="Status" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="Amount" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="AcceptDate" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="WelcomeStartDate" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="WelcomeEndDate" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="TarifId" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="TarifName" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="ActiveCtgs" type="tns:ActiveCtgsTypeRs"/>
+               <xsd:element minOccurs="0" name="MaxNumOfCtg" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="Rate" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="AccrueMonthLimit" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="MaxCompensLim" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ActiveCtgsTypeRs">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="ActiveCtg" type="tns:ActiveCtgTypeRs"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="GetClientMkbBonusInfoRqTypeRq">
+            <xsd:sequence>
+               <xsd:element maxOccurs="unbounded" minOccurs="0" name="Client" type="tns:ClientTypeRq"/>
+            </xsd:sequence>
+         </xsd:complexType>
+         <xsd:complexType name="ActiveCtgTypeRs">
+            <xsd:sequence>
+               <xsd:element minOccurs="0" name="ActiveCtgId" type="xsd:string"/>
+               <xsd:element minOccurs="0" name="ActiveCtgName" type="xsd:string"/>
+            </xsd:sequence>
+         </xsd:complexType>
+      </xsd:schema>
+   </wsdl:types>
+   <wsdl:message name="GetClientMkbBonusInfoRequest">
+      <wsdl:part name="parameters" element="tns:GetClientMkbBonusInfo"/>
+   </wsdl:message>
+   <wsdl:message name="GetClientMkbBonusInfoResponse">
+      <wsdl:part name="parameters" element="tns:GetClientMkbBonusInfoResponse"/>
+   </wsdl:message>
+   <wsdl:portType xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" name="SIEBEL_GET_BONUS_INFOPortType" wsp:PolicyURIs="#UTOverTransport">
+      <wsdl:operation name="GetClientMkbBonusInfo">
+         <wsdl:input message="tns:GetClientMkbBonusInfoRequest" wsaw:Action="http://mkb.ru/GetClientMkbBonusInfo/GetClientMkbBonusInfo"/>
+         <wsdl:output message="tns:GetClientMkbBonusInfoResponse" wsaw:Action="http://mkb.ru/GetClientMkbBonusInfo/GetClientMkbBonusInfo/GetClientMkbBonusInfoResponse"/>
+      </wsdl:operation>
+   </wsdl:portType>
+   <wsdl:binding name="SIEBEL_GET_BONUS_INFOSoap11Binding" type="tns:SIEBEL_GET_BONUS_INFOPortType">
+      <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetClientMkbBonusInfo">
+         <soap:operation soapAction="http://mkb.ru/GetClientMkbBonusInfo/GetClientMkbBonusInfo" style="document"/>
+         <wsdl:input>
+            <soap:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:binding name="SIEBEL_GET_BONUS_INFOSoap12Binding" type="tns:SIEBEL_GET_BONUS_INFOPortType">
+      <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+      <wsdl:operation name="GetClientMkbBonusInfo">
+         <soap12:operation soapAction="http://mkb.ru/GetClientMkbBonusInfo/GetClientMkbBonusInfo" style="document"/>
+         <wsdl:input>
+            <soap12:body use="literal"/>
+         </wsdl:input>
+         <wsdl:output>
+            <soap12:body use="literal"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:binding name="SIEBEL_GET_BONUS_INFOHttpBinding" type="tns:SIEBEL_GET_BONUS_INFOPortType">
+      <http:binding verb="POST"/>
+      <wsdl:operation name="GetClientMkbBonusInfo">
+         <http:operation location="GetClientMkbBonusInfo"/>
+         <wsdl:input>
+            <mime:content type="text/xml" part="parameters"/>
+         </wsdl:input>
+         <wsdl:output>
+            <mime:content type="text/xml" part="parameters"/>
+         </wsdl:output>
+      </wsdl:operation>
+   </wsdl:binding>
+   <wsdl:service name="SIEBEL_GET_BONUS_INFO">
+      <wsdl:port name="SIEBEL_GET_BONUS_INFOHttpsSoap11Endpoint" binding="tns:SIEBEL_GET_BONUS_INFOSoap11Binding">
+         <soap:address location="https://wso2-test.mcb.ru:8243/services/SIEBEL_GET_BONUS_INFO.SIEBEL_GET_BONUS_INFOHttpsSoap11Endpoint"/>
+      </wsdl:port>
+      <wsdl:port name="SIEBEL_GET_BONUS_INFOHttpsSoap12Endpoint" binding="tns:SIEBEL_GET_BONUS_INFOSoap12Binding">
+         <soap12:address location="https://wso2-test.mcb.ru:8243/services/SIEBEL_GET_BONUS_INFO.SIEBEL_GET_BONUS_INFOHttpsSoap12Endpoint"/>
+      </wsdl:port>
+      <wsdl:port name="SIEBEL_GET_BONUS_INFOHttpsEndpoint" binding="tns:SIEBEL_GET_BONUS_INFOHttpBinding">
+         <http:address location="https://wso2-test.mcb.ru:8243/services/SIEBEL_GET_BONUS_INFO.SIEBEL_GET_BONUS_INFOHttpsEndpoint"/>
+      </wsdl:port>
+   </wsdl:service>
+</wsdl:definitions>
